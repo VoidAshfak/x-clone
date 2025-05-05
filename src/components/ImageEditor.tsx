@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react'
 
-const ImageEdior = ({ onClose, previewURL, settings, setSettings }: {
+const ImageEditor = ({ onClose, previewURL, settings, setSettings }: {
     onClose: () => void;
     previewURL: string;
     settings: {
@@ -129,4 +129,4 @@ const ImageEdior = ({ onClose, previewURL, settings, setSettings }: {
     )
 }
 
-export default ImageEdior
+export default ImageEditor

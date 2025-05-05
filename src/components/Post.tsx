@@ -2,8 +2,38 @@ import React from 'react'
 import Image from './Image'
 import PostInfo from './PostInfo'
 import PostInteractions from './PostInteraction'
+import { imagekit } from "@/utils"
+
+
+
+interface FileDetailsResponse {
+    width: number;
+    height: number;
+    filePath: string;
+    url: string;
+    fileType: string;
+    customMetadata?: { sensitive: boolean };
+}
 
 const Post = async ({ type }: { type?: "status" | "comment" }) => {
+
+    // FETCH POST MEDIA
+
+    // const getFileDetails = async (
+    //     fileId: string
+    // ): Promise<FileDetailsResponse> => {
+    //     return new Promise((resolve, reject) => {
+    //         imagekit.getFileDetails(fileId, function (error: any, result: any) {
+    //             if (error) reject(error);
+    //             else resolve(result as FileDetailsResponse);
+    //         });
+    //     });
+    // };
+
+    // const fileDetails = await getFileDetails("6818e50d432c476416afa988");
+
+    // console.log(fileDetails);
+
     return (
         <div className='p-4 border-y-[1px] border-borderGray'>
             {/* POST TYPE */}
@@ -43,7 +73,22 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
                     <p className="">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam laudantium consequuntur vel vero est quos quam omnis facere dolores optio! Porro voluptatem maxime ipsa quae excepturi incidunt illum aliquam nesciunt!
                     </p>
-                    <Image path='/general/post.jpeg' alt='post' w={600} h={600} tr={true} />
+                    <Image path="general/post.jpeg" alt="" w={600} h={600} />
+                    {/* AFTER FETCHING THE POST MEDIA */}
+                    {/* {fileDetails && fileDetails.fileType === "image" ? (
+                        <Image
+                            path={fileDetails.filePath}
+                            alt=""
+                            w={fileDetails.width}
+                            h={fileDetails.height}
+                            className={fileDetails.customMetadata?.sensitive ? "blur-lg" : ""}
+                        />
+                    ) : (
+                        <Video
+                            path={fileDetails.filePath}
+                            className={fileDetails.customMetadata?.sensitive ? "blur-lg" : ""}
+                        />
+                    )} */}
                     <PostInteractions />
                 </div>
             </div>

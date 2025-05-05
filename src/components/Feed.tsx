@@ -5,8 +5,6 @@ const Feed = () => {
         <div className="">
             <Post />
             <Post />
-            <Post />
-            <Post />
         </div>
     )
 }
