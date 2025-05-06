@@ -1,10 +1,9 @@
-import React from 'react'
-import Image from './Image'
-import PostInfo from './PostInfo'
-import PostInteractions from './PostInteraction'
-import { imagekit } from "@/utils"
-
-
+import { imagekit } from "@/utils";
+import Image from "./Image";
+import PostInfo from "./PostInfo";
+import PostInteractions from "./PostInteraction";
+import Video from "./Video";
+import Link from "next/link";
 
 interface FileDetailsResponse {
     width: number;
@@ -20,22 +19,22 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
     // FETCH POST MEDIA
 
     // const getFileDetails = async (
-    //     fileId: string
+    //   fileId: string
     // ): Promise<FileDetailsResponse> => {
-    //     return new Promise((resolve, reject) => {
-    //         imagekit.getFileDetails(fileId, function (error: any, result: any) {
-    //             if (error) reject(error);
-    //             else resolve(result as FileDetailsResponse);
-    //         });
+    //   return new Promise((resolve, reject) => {
+    //     imagekit.getFileDetails(fileId, function (error, result) {
+    //       if (error) reject(error);
+    //       else resolve(result as FileDetailsResponse);
     //     });
+    //   });
     // };
 
-    // const fileDetails = await getFileDetails("6818e50d432c476416afa988");
+    // const fileDetails = await getFileDetails("675d943be375273f6003858f");
 
     // console.log(fileDetails);
 
     return (
-        <div className='p-4 border-y-[1px] border-borderGray'>
+        <div className="p-4 border-y-[1px] border-borderGray">
             {/* POST TYPE */}
             <div className="flex items-center gap-2 text-sm text-textGray mb-2 from-bold">
                 <svg
@@ -51,28 +50,58 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
                 </svg>
                 <span>Lama Dev reposted</span>
             </div>
-
             {/* POST CONTENT */}
-            <div className='flex gap-4'>
+            <div className={`flex gap-4 ${type === "status" && "flex-col"}`}>
                 {/* AVATAR */}
-                <div className='relative w-10 h-10 rounded-full overflow-hidden'>
-                    <Image path='/general/avatar.png' alt='avatar' w={100} h={100} tr={true} />
+                <div
+                    className={`${type === "status" && "hidden"
+                        } relative w-10 h-10 rounded-full overflow-hidden`}
+                >
+                    <Image path="general/avatar.png" alt="" w={100} h={100} tr={true} />
                 </div>
                 {/* CONTENT */}
                 <div className="flex-1 flex flex-col gap-2">
                     {/* TOP */}
-                    <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                            <h1 className="font-bold text-md">Lama Dev</h1>
-                            <span className='text-textGray'>@lama_dev</span>
-                            <span className='text-textGray'>1 day ago</span>
-                        </div>
+                    <div className="w-full flex justify-between">
+                        <Link href={`/lamaWebDev`} className="flex gap-4">
+                            <div
+                                className={`${type !== "status" && "hidden"
+                                    } relative w-10 h-10 rounded-full overflow-hidden`}
+                            >
+                                <Image
+                                    path="general/avatar.png"
+                                    alt=""
+                                    w={100}
+                                    h={100}
+                                    tr={true}
+                                />
+                            </div>
+                            <div
+                                className={`flex items-center gap-2 flex-wrap ${type === "status" && "flex-col gap-0 !items-start"
+                                    }`}
+                            >
+                                <h1 className="text-md font-bold">Lama Dev</h1>
+                                <span
+                                    className={`text-textGray ${type === "status" && "text-sm"}`}
+                                >
+                                    @lamaWebDev
+                                </span>
+                                {type !== "status" && (
+                                    <span className="text-textGray">1 day ago</span>
+                                )}
+                            </div>
+                        </Link>
                         <PostInfo />
                     </div>
                     {/* TEXT & MEDIA */}
-                    <p className="">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam laudantium consequuntur vel vero est quos quam omnis facere dolores optio! Porro voluptatem maxime ipsa quae excepturi incidunt illum aliquam nesciunt!
-                    </p>
+                    <Link href={`/lamaWebDev/status/123`}>
+                        <p className={`${type === "status" && "text-lg"}`}>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum,
+                            animi. Laborum commodi aliquam alias molestias odio, ab in,
+                            reprehenderit excepturi temporibus, ducimus necessitatibus fugiat
+                            iure nam voluptas soluta pariatur inventore.
+                        </p>
+                    </Link>
                     <Image path="general/post.jpeg" alt="" w={600} h={600} />
                     {/* AFTER FETCHING THE POST MEDIA */}
                     {/* {fileDetails && fileDetails.fileType === "image" ? (
@@ -89,11 +118,14 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
                             className={fileDetails.customMetadata?.sensitive ? "blur-lg" : ""}
                         />
                     )} */}
+                    {type === "status" && (
+                        <span className="text-textGray">8:41 PM · Dec 5, 2024</span>
+                    )}
                     <PostInteractions />
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Post
+export default Post;
